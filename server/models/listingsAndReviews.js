@@ -12,6 +12,10 @@ let ListingsAndReviewsSchema = new Schema({
         type: String,
         required: [true, 'Por favor ingrese la url de la habitacion']
     },
+    property_type: {
+        type: String,
+        required: [true, 'Por favor ingrese el tipo de propiedad']
+    },
     summary: {
         type: String,
         required: [true, 'Por favor ingresa la info acerca de la habitacion']
