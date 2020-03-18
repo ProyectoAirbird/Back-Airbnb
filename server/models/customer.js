@@ -19,7 +19,7 @@ let customerSchema = new Schema({
     address: {
         type: String,
         unique: true,
-        required: [true, 'Por favor ingrese su correo']
+        required: [true, 'Por favor ingrese su direccion']
     },
     city: {
         type: String,

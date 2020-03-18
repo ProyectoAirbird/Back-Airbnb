@@ -39,6 +39,78 @@ app.get('/rentas', (req, res) => {
         });
 });
 
+//get id
+app.get('/rentas/:id', (req, res) => {
+    let id = req.params.id;
+    Rentas.find({ status: true, _id: id })
+        .exec((err, rentas) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro las rentas",
+                    cont: err
+                });
+            }
+            console.log(req.rentas);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro la renta correctamente por id",
+                count: rentas.length,
+                rentas
+            });
+        });
+});
+
+//get por customer
+app.get('/rentas/customer/:name', (req, res) => {
+    let name = req.params.name;
+    Rentas.find({ status: true, customer: name })
+        .exec((err, rentas) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro el renta",
+                    cont: err
+                });
+            }
+            console.log(req.rentas);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro la renta correctamente por nombre",
+                count: rentas.length,
+                rentas
+            });
+        });
+});
+
+//get por nombre departamento
+app.get('/rentas/nombre/:nombre', (req, res) => {
+    let nombre = req.params.nombre;
+    Rentas.find({ status: true, name: nombre })
+        .exec((err, rentas) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro la renta",
+                    cont: err
+                });
+            }
+            console.log(req.rentas);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro la renta correctamente por country",
+                count: rentas.length,
+                rentas
+            });
+        });
+});
+
 
 app.post('/rentas', (req, res) => {
     let body = req.body;
