@@ -3,41 +3,95 @@ const _ = require('underscore');
 const app = express();
 
 const ListingsAndReviews = require('../models/listingsAndReviews');
+
 app.get('/listingsAndReviews', (req, res) => {
-    ListingsAndReviews.find((err, listingsAndReviewsDB) => {
-
-        console.log('Buscando...');
-
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                err
-            });
-        }
-
-        console.log(listingsAndReviewsDB);
-
-
-        ListingsAndReviews.countDocuments((err, conteo) => {
+    ListingsAndReviews.find({ status: true })
+        .exec((err, listingsAndReviews) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
                     err
                 });
             }
-
             return res.status(200).json({
                 ok: true,
-                conteo,
-                listingsAndReviewsDB
+                count: listingsAndReviews.length,
+                listingsAndReviews
             })
-        })
-    })
-
-
-
+        });
 });
-module.exports = app;
+
+//get id
+app.get('/listingsAndReviews/:id', (req, res) => {
+    let id = req.params.id;
+    ListingsAndReviews.find({ status: true, _id: id })
+        .exec((err, listingsAndReviews) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro el departamento",
+                    cont: err
+                });
+            }
+            console.log(req.listingsAndReviews);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro el departamento correctamente por id",
+                count: listingsAndReviews.length,
+                listingsAndReviews
+            });
+        });
+});
+
+//get por nombre
+app.get('/listingsAndReviews/nombre/:nombre', (req, res) => {
+    let nombre = req.params.nombre;
+    ListingsAndReviews.find({ status: true, name: nombre })
+        .exec((err, listingsAndReviews) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro el departamento",
+                    cont: err
+                });
+            }
+            console.log(req.listingsAndReviews);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro el departamento correctamente por nombre",
+                count: listingsAndReviews.length,
+                listingsAndReviews
+            });
+        });
+});
+
+//get por type de propiedad
+app.get('/listingsAndReviews/type/:type', (req, res) => {
+    let type = req.params.type;
+    ListingsAndReviews.find({ status: true, property_type: type })
+        .exec((err, listingsAndReviews) => { //ejecuta la funcion
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    status: 400,
+                    msg: "No se mostro el departamento",
+                    cont: err
+                });
+            }
+            console.log(req.listingsAndReviews);
+            return res.status(200).json({
+                ok: true,
+                status: 200,
+                msg: "Se mostro el departamento correctamente por country",
+                count: listingsAndReviews.length,
+                listingsAndReviews
+            });
+        });
+});
 
 app.post('/listingsAndReviews', (req, res) => {
     let body = req.body;
@@ -45,6 +99,7 @@ app.post('/listingsAndReviews', (req, res) => {
     let listingsAndReviews = new ListingsAndReviews({
         name: body.name,
         listing_url: body.listing_url,
+        property_type: body.property_type,
         summary: body.summary,
         description: body.description,
         notes: body.notes,
@@ -69,9 +124,9 @@ app.post('/listingsAndReviews', (req, res) => {
 
 app.put('/listingsAndReviews/:id', (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['name', 'listing_url', 'reviewer_id', 'summary', 'description', 'notes', 'price']);
+    let body = _.pick(req.body, ['name', 'property_type', 'description']);
 
-    listado.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, listingsAndReviewsDB) => {
+    ListingsAndReviews.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, listingsAndReviewsDB) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
