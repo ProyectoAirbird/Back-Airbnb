@@ -141,7 +141,7 @@ app.put('/listingsAndReviews/:id', (req, res) => {
 });
 app.delete('/listingsAndReviews/:id', (req, res) => {
     let id = req.params.id;
-    Libro.findByIdAndUpdate(id, { status: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
+    ListingsAndReviews.findByIdAndUpdate(id, { status: false }, { new: true, runValidators: true, context: 'query' }, (err, resp) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
