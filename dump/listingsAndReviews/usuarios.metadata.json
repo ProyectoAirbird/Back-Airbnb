@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"listingsAndReviews.usuarios"},{"v":{"$numberInt":"2"},"unique":true,"key":{"email":{"$numberInt":"1"}},"name":"email_1","ns":"listingsAndReviews.usuarios","background":true}],"uuid":"4681d6cbe2fc49dc9d804c4214b08fbf"}

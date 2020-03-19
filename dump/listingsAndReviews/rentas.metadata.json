@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"listingsAndReviews.rentas"}],"uuid":"472e8b2a2e5f4b159388928773a1048b"}
